@@ -69,37 +69,44 @@ class SearchController extends Controller
 
             if ($results) {
                 foreach ($results as $item) {
-                    $place = Place::create([
-                        'place_id' => $item['place_id'],
-                        'licence' => $item['licence'] ?? null,
-                        'osm_type' => $item['osm_type'] ?? null,
-                        'osm_id' => $item['osm_id'] ?? null,
-                        'lat' => $item['lat'] ?? null,
-                        'lon' => $item['lon'] ?? null,
-                        'type' => $item['type'] ?? null,
-                        'place_rank' => $item['place_rank'] ?? null,
-                        'importance' => $item['importance'] ?? null,
-                        'addresstype' => $item['addresstype'] ?? null,
-                        'name' => $item['name'] ?? null,
-                        'display_name' => $item['display_name'] ?? null,
-                    ]);
+                    // Periksa atau buat Place berdasarkan `place_id`
+                    $place = Place::updateOrCreate(
+                        ['place_id' => $item['place_id']], // Cek berdasarkan `place_id`
+                        [
+                            'licence' => $item['licence'] ?? null,
+                            'osm_type' => $item['osm_type'] ?? null,
+                            'osm_id' => $item['osm_id'] ?? null,
+                            'lat' => $item['lat'] ?? null,
+                            'lon' => $item['lon'] ?? null,
+                            'type' => $item['type'] ?? null,
+                            'place_rank' => $item['place_rank'] ?? null,
+                            'importance' => $item['importance'] ?? null,
+                            'addresstype' => $item['addresstype'] ?? null,
+                            'name' => $item['name'] ?? null,
+                            'display_name' => $item['display_name'] ?? null,
+                        ]
+                    );
 
+                    // Jika ada data address, simpan atau update ke tabel address
                     if (isset($item['address'])) {
-                        $place->address()->create([
-                            'village' => $item['address']['village'] ?? null,
-                            'borough' => $item['address']['borough'] ?? null,
-                            'county' => $item['address']['county'] ?? null,
-                            'city' => $item['address']['city'] ?? null,
-                            'state' => $item['address']['state'] ?? null,
-                            'postcode' => $item['address']['postcode'] ?? null,
-                            'country' => $item['address']['country'] ?? null,
-                            'country_code' => $item['address']['country_code'] ?? null,
-                            'neighbourhood' => $item['address']['neighbourhood'] ?? null,
-                            'road' => $item['address']['road'] ?? null,
-                            'shop' => $item['address']['shop'] ?? null,
-                            'suburb' => $item['address']['suburb'] ?? null,
-                            'historic' => $item['address']['historic'] ?? null,
-                        ]);
+                        $place->address()->updateOrCreate(
+                            ['place_id' => $place->id], // Relasi berdasarkan `place_id`
+                            [
+                                'village' => $item['address']['village'] ?? null,
+                                'borough' => $item['address']['borough'] ?? null,
+                                'county' => $item['address']['county'] ?? null,
+                                'city' => $item['address']['city'] ?? null,
+                                'state' => $item['address']['state'] ?? null,
+                                'postcode' => $item['address']['postcode'] ?? null,
+                                'country' => $item['address']['country'] ?? null,
+                                'country_code' => $item['address']['country_code'] ?? null,
+                                'neighbourhood' => $item['address']['neighbourhood'] ?? null,
+                                'road' => $item['address']['road'] ?? null,
+                                'shop' => $item['address']['shop'] ?? null,
+                                'suburb' => $item['address']['suburb'] ?? null,
+                                'historic' => $item['address']['historic'] ?? null,
+                            ]
+                        );
                     }
                 }
             }

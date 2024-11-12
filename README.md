@@ -42,7 +42,26 @@ GET /search?search=Medan
 ```
 Results: Returns search results related to the keyword Medan in name and display name.
 
-### Success Response
+## GET - /reverse
+This API is used to retrieve address data based on latitude and longitude coordinates.
+
+### Query Parameters
+1. **lat** (required)
+- Description: Latitude is used to find a location.
+- Example: ?lat=3.595193
+
+2. **lon** (required)
+- Description: Longitude is used to find locations.
+- Example: ?lon=98.675022
+
+### Usage Example
+To search for an address based on latitude and longitude coordinates:
+```http
+GET /reverse?lat=3.595193&lon=98.675022
+```
+Results: Returns the closest address data that matches the given latitude and longitude coordinates.
+
+## Success Response
 The response from the API will be in the form of JSON containing data that matches the search criteria.
 
 ```json
@@ -86,7 +105,7 @@ The response from the API will be in the form of JSON containing data that match
 }
 ```
 
-### Error Response
+## Error Response
 If the search parameter is not found or there is an error in the request, the API will return a response with an error status.
 
 ```json
