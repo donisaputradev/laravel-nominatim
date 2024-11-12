@@ -1,49 +1,49 @@
 # Laravel Nominatim
-Ini adalah project laravel sebagai backup dari nominatim yang mana ada limit penggunaan. karena limit ini, kita sering menemukan kendala pada aplikasi kita. harapannya ini bisa dikembangkan lagi.
+This is a Laravel project as a backup for Nominatim which has a usage limit. because of this limit, we often encounter problems in our applications. The hope is that this can be developed again.
 
 ## GET - /search
-API ini digunakan untuk mencari data berdasarkan beberapa parameter seperti search, street, city, county, state, country, dan postalcode. Endpoint ini akan mengembalikan hasil pencarian sesuai dengan kriteria yang diberikan melalui query parameters.
+This API is used to search for data based on several parameters such as search, street, city, county, state, country, and postalcode. This endpoint will return search results according to the criteria provided via query parameters.
 
 ### Query Parameters
-Berikut adalah query parameters yang dapat digunakan:
+The following are the query parameters that can be used:
 
 1. **search** (optional)
-- Deskripsi: Kata kunci untuk pencarian umum.
-- Contoh: ?search=hotel
+- Description: Keywords for general search.
+- Example: ?search=hotel
 
 2. **street** (optional)
-- Deskripsi: Nama jalan atau alamat jalan.
-- Contoh: ?street=Jalan Merdeka
+- Description: Street name or street address.
+- Example: ?street=Independence Street
 
 3. **city** (optional)
-- Deskripsi: Nama kota.
-- Contoh: ?city=Jakarta
+- Description: City name.
+- Example: ?city=Jakarta
 
 4. **county** (optional)
-- Deskripsi: Nama kabupaten.
-- Contoh: ?county=Bandung
+- Description: District name.
+- Example: ?county=Bandung
 
 5. **state** (optional)
-- Deskripsi: Nama provinsi atau negara bagian.
-- Contoh: ?state=West Java
+- Description: Name of province or state.
+- Example: ?state=West Java
 
 6. **country** (optional)
-- Deskripsi: Nama negara.
-- Contoh: ?country=Indonesia
+- Description: Country name.
+- Example: ?country=Indonesia
 
-7. **postalcode** (optional)
-- Deskripsi: Kode pos.
-- Contoh: ?postalcode=40125
+7. **postal code** (optional)
+- Description: Postal code.
+- Example: ?postalcode=40125
 
-### Contoh Penggunaan
-Pencarian berdasarkan kata kunci umum
+### Usage Example
+Search based on general keywords
 ```http
 GET /search?search=Medan
 ```
-Hasil: Mengembalikan hasil pencarian yang terkait dengan kata kunci Medan di name dan display name.
+Results: Returns search results related to the keyword Medan in name and display name.
 
 ### Success Response
-Response dari API akan berupa JSON yang berisi data yang sesuai dengan kriteria pencarian.
+The response from the API will be in the form of JSON containing data that matches the search criteria.
 
 ```json
 {
@@ -87,7 +87,8 @@ Response dari API akan berupa JSON yang berisi data yang sesuai dengan kriteria 
 ```
 
 ### Error Response
-Jika parameter pencarian tidak ditemukan atau ada kesalahan dalam permintaan, API akan mengembalikan response dengan status error.
+If the search parameter is not found or there is an error in the request, the API will return a response with an error status.
+
 ```json
 {
     "meta": {
