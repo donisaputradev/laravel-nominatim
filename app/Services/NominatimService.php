@@ -10,8 +10,8 @@ class NominatimService
 
     public function __construct()
     {
-        $this->client = new Client(['base_uri' => 'https://nominatim.openstreetmap.org', 'headers' => [
-            'User-Agent' => 'LaravelNominatimBackup/1.0 (donisaputradev@gmail.com)'
+        $this->client = new Client(['base_uri' => env('NOMINATIM_URL'), 'headers' => [
+            'User-Agent' => env('USER_AGENT'),
         ]]);
     }
 
