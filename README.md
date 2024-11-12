@@ -1,66 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Nominatim
+Ini adalah project laravel sebagai backup dari nominatim yang mana ada limit penggunaan. karena limit ini, kita sering menemukan kendala pada aplikasi kita. harapannya ini bisa dikembangkan lagi.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## GET - /search
+API ini digunakan untuk mencari data berdasarkan beberapa parameter seperti search, street, city, county, state, country, dan postalcode. Endpoint ini akan mengembalikan hasil pencarian sesuai dengan kriteria yang diberikan melalui query parameters.
 
-## About Laravel
+### Query Parameters
+Berikut adalah query parameters yang dapat digunakan:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. **search** (optional)
+- Deskripsi: Kata kunci untuk pencarian umum.
+- Contoh: ?search=hotel
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. **street** (optional)
+- Deskripsi: Nama jalan atau alamat jalan.
+- Contoh: ?street=Jalan Merdeka
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. **city** (optional)
+- Deskripsi: Nama kota.
+- Contoh: ?city=Jakarta
 
-## Learning Laravel
+4. **county** (optional)
+- Deskripsi: Nama kabupaten.
+- Contoh: ?county=Bandung
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. **state** (optional)
+- Deskripsi: Nama provinsi atau negara bagian.
+- Contoh: ?state=West Java
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+6. **country** (optional)
+- Deskripsi: Nama negara.
+- Contoh: ?country=Indonesia
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+7. **postalcode** (optional)
+- Deskripsi: Kode pos.
+- Contoh: ?postalcode=40125
 
-## Laravel Sponsors
+### Contoh Penggunaan
+Pencarian berdasarkan kata kunci umum
+```http
+GET /search?search=Medan
+```
+Hasil: Mengembalikan hasil pencarian yang terkait dengan kata kunci Medan di name dan display name.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Success Response
+Response dari API akan berupa JSON yang berisi data yang sesuai dengan kriteria pencarian.
 
-### Premium Partners
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": null
+    },
+    "data": [
+        {
+            "place_id": 234441200,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "relation",
+            "osm_id": 8484616,
+            "lat": "3.5896654",
+            "lon": "98.6738261",
+            "type": "administrative",
+            "place_rank": 12,
+            "importance": 0.57434742996263,
+            "addresstype": "city",
+            "name": "Kota Medan",
+            "display_name": "Kota Medan, Sumatera Utara, Sumatera, Indonesia",
+            "address": {
+                "village": null,
+                "borough": null,
+                "county": null,
+                "city": "Kota Medan",
+                "state": "Sumatera Utara",
+                "postcode": null,
+                "country": "Indonesia",
+                "country_code": "id",
+                "neighbourhood": null,
+                "road": null,
+                "shop": null,
+                "suburb": null,
+                "historic": null,
+            }
+        }
+    ]
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Error Response
+Jika parameter pencarian tidak ditemukan atau ada kesalahan dalam permintaan, API akan mengembalikan response dengan status error.
+```json
+{
+    "meta": {
+        "code": 500,
+        "status": "error",
+        "message": "Service Error"
+    }
+}
+```
